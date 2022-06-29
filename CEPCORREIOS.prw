@@ -1,3 +1,5 @@
+//Consome servi√ßo de correios para preenchimento dos campos de endere√ßo automaticamente no Protheus, atrav√©s do CEP.
+
 #INCLUDE "TOTVS.ch"  
 #INCLUDE "XMLXFUN.CH"
 
@@ -13,7 +15,7 @@ Local cHeadRet      := ""
 //Capturar o retorno do WebService(rua, municipio, estado, etc)
 Local aData         := {}
 
-//Variùveis da funùùo XmlParser( [ cXml ], [ cReplace ], [ cError ], [ cWarning ] )
+//Vari¬ùveis da fun¬ù¬ùo XmlParser( [ cXml ], [ cReplace ], [ cError ], [ cWarning ] )
 
 Local oXml          := ""
 Local cError        := ""
@@ -22,9 +24,9 @@ Local sPostRet      := ""
 
 DbSelectArea("SA1")
 
-    //Se nùo tiver vazio, ele farù a busca
+    //Se n¬ùo tiver vazio, ele far¬ù a busca
     IF !Empty(M->A1_CEP)
-        //Montamos o cabeùalho do SOAP
+        //Montamos o cabe¬ùalho do SOAP
         aAdd(aHeadStr,'SOAPAction: "http://cliente.bean.master.sigep.bsb.correios.com.br/AtendeCliente/consultaCEP"')
         aAdd(aHeadStr,'Content-Type: text/xml;charset=UTF-8')
 
@@ -40,7 +42,7 @@ DbSelectArea("SA1")
                     //HttpPost( < cUrl >, [ cGetParms ], [ cPostParms ], [ nTimeOut ], [ aHeadStr ], [ @cHeaderGet ] )
         sPostRet    := HttpPost(cUrlWSDL,   "",              cData,         nTimeOut,       aHeadStr,    @cHeadRet)
 
-        //Utilizaremos o sPostRet para trabalharmos dentro da funùùo XMLParser
+        //Utilizaremos o sPostRet para trabalharmos dentro da fun¬ù¬ùo XMLParser
 
         IF !Empty(sPostRet)
             IF AT("<faultcode>",sPostRet) == 0
@@ -58,7 +60,7 @@ DbSelectArea("SA1")
                 M->A1_MUN       := aData[3]
                 M->A1_EST       := aData[4]
             ELSE
-                Alert("CEP INV¡LIDO OU N√O ENCONTRADO","ATEN«√O")
+                Alert("CEP INV√ÅLIDO OU N√ÉO ENCONTRADO","ATEN√á√ÉO")
             ENDIF
         ENDIF
     ENDIF
